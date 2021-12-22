@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { SurveysList } from '@components/main/SurveysList';
 import { SurveyService } from 'api/services/survey';
 import { Survey } from 'api/models/survey';
-import { HiRefresh } from 'react-icons/hi';
+import { HiArrowLeft, HiRefresh } from 'react-icons/hi';
 import SurveyPage from '../survey';
 
 const Surveys = () => {
@@ -46,6 +46,10 @@ const Surveys = () => {
     listSurveys();
   }, []);
 
+  const clearSelectedSurvey = () => {
+    setSurveySelected(null);
+  };
+
   return (
     <Container>
       <Head>
@@ -54,9 +58,30 @@ const Surveys = () => {
       <Layout>
         <Sidemenu />
         <Content>
-          <Heading as="h1" fontWeight="normal" fontSize="26px">
-            {surveySelected ? surveySelected.name : 'Surveys'}
-          </Heading>
+          <Flex>
+            {surveySelected && (
+              <Box mr={4}>
+                <Tooltip label="Back to surveys list" placement="top">
+                  <Button
+                    rounded="lg"
+                    p={0}
+                    bg="teal.400"
+                    colorScheme="teal"
+                    w="30px"
+                    onClick={clearSelectedSurvey}
+                    data-testid="back-to-surveys-list"
+                  >
+                    <HiArrowLeft color="white" />
+                  </Button>
+                </Tooltip>
+              </Box>
+            )}
+            <Box>
+              <Heading as="h1" fontWeight="normal" fontSize="26px">
+                {surveySelected ? surveySelected.name : 'Surveys'}
+              </Heading>
+            </Box>
+          </Flex>
 
           <Box
             background="#292929"
